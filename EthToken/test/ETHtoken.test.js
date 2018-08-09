@@ -20,7 +20,7 @@ beforeEach(async () => {
   inbox = await new web3.eth.Contract(JSONABI)
     .deploy({
       data: bytecode,
-      arguments: [100, 'Hidden Figures', 0, 'HF' , 100]
+      arguments: [100000000000000000000, 'BCCoin', 0, 'BCC' , 100]
     })
     .send({ from: accounts[0], gas: '1000000' });
 });
@@ -45,19 +45,44 @@ it('balance[account 0] equal the initial ammount', async () => {
     const balance = await inbox.methods.balances(accounts[0]).call({
       from: accounts[0]
     });
-    assert.equal(100, balance)
+    assert.equal(100000000000000000000, balance)
+  });
+})
+
+describe('properties initialized', () => {
+  it('name property assigned', async () => {
+    const name = await inbox.methods.name().call({
+      from: accounts[0]
+    });
+    assert.equal('BCCoin', name)
+  });
+  it('symbol property assigned', async () => {
+    const symbol = await inbox.methods.symbol().call({
+      from: accounts[0]
+    });
+    assert.equal('BCC', symbol)
+    });
+  it('decimals property assigned', async () => {
+    const decimals = await inbox.methods.decimals().call({
+      from: accounts[0]
+    });
+    assert.equal(0, decimals)
+  });
+  it('token value property assigned', async () => {
+    const tokenValue = await inbox.methods.tokenValue().call({
+      from: accounts[0]
+    });
+    assert.equal(100, tokenValue)
   });
 })
 
 
-
-
 describe('transfer function', () => {
-  it('transfer function exist', () => {
+  it('transfer function exists', () => {
     assert.ok(inbox.methods.transfer);
   });
 
-  it('Performs a transaction and modifies a balance of account2', async () => {
+  it('it should perform a transaction and modify the balances of sender and receiver account', async () => {
      await inbox.methods.transfer(accounts[2],10).send ({
       from: accounts[0]
     });
@@ -69,16 +94,28 @@ describe('transfer function', () => {
     
     assert.equal(10, balance2);
   
-  })
+  });
+
+ //  it('sender account should have a sufficient balance ', async () => {
+ //   let sth =  await inbox.methods.transfer(accounts[2],10).send ({
+ //      from: accounts[1]
+ //    });
+ //   try {
+ //  assert.equal(1, 2);
+ //  } catch (err) {
+ //    console.log(err)}
+ // // assert(sth instanceof assert.AssertionError);
+ // // assert.equal("blabla",sth);
+ //  });
 })
 
 
 describe('Approve', () => {
-  it('approve function exist', () => {
+  it('approve function exists', () => {
     assert.ok(inbox.methods.approve);
   });
 
-  it('The value of tokens an adress determines for another account to spend', async () => {
+  it('it should assign the value to spender address ', async () => {
      await inbox.methods.approve(accounts[2],10).send({
       from: accounts[0]
     });
@@ -95,11 +132,11 @@ describe('Approve', () => {
 
 
 describe('transferFrom function', () => {
-  it('transferFrom function exist', () => {
+  it('transferFrom function exists', () => {
     assert.ok(inbox.methods.transferFrom);
   });
 
-  it('Performs a transaction and modifies a balance of account2', async () => {
+  it('it should perform a transaction and modify the balances of sender and receiver accounts', async () => {
      await inbox.methods.transfer(accounts[2],10).send ({
       from: accounts[0]
     });
@@ -113,9 +150,12 @@ describe('transferFrom function', () => {
     const balance3 = await inbox.methods.balances(accounts[3]).call({
       from: accounts[3]
     });
-    
+
+    const balance2 = await inbox.methods.balances(accounts[2]).call({
+      from: accounts[2]
+    });
     assert.equal(3, balance3);
-  
+    assert.equal(7,balance2)
   })
 })
 
@@ -124,11 +164,11 @@ describe('transferFrom function', () => {
 
 
 describe('getTokens function', () => {
-  it('getTokens function exist', () => {
+  it('getTokens function exists', () => {
     assert.ok(inbox.methods.getTokens);
   });
 
-  it('receives tokens when you pay certain amount of ether ', async () => {
+  it('it should receive tokens when you pay certain amount of ethers ', async () => {
     await inbox.methods.getTokens().send({
       from: accounts[1],
       value: 1000
@@ -141,6 +181,21 @@ describe('getTokens function', () => {
     assert.equal(10, tokens);
   });
 })
+
+describe('getBalance function', () => {
+  it('getBalance function exist', () => {
+    assert.ok(inbox.methods.getBalance);
+  });
+
+  it('return balance ', async () => {
+
+   const balance =  await inbox.methods.getBalance().call({
+      from: accounts[1]
+    });
+       assert.ok(balance<100000000000000000000);
+
+  })
+});
 
 describe('getEthers function', () => {
 it('getEthers function exist', () => {
@@ -174,28 +229,11 @@ it('getEthers function exist', () => {
     });
 
     assert.equal(0, tokens);
-    assert.equal(99999041299999909000, Before);
-    assert.equal(9998082599999909000,after1);
-    assert.equal(99997558819999909000,after2);
+    assert.ok(Before<100000000000000000000);
+    assert.ok(after1<Before);
+    assert.ok(after1<after2);
   });
 })
 
-describe('getBalance function', () => {
-  it('getBalance function exist', () => {
-    assert.ok(inbox.methods.getBalance);
-  });
 
-  it('return balance ', async () => {
-    await inbox.methods.getTokens().send({
-      from: accounts[1],
-      value: 1000
-    });
-
-   const B =  await inbox.methods.getBalance().call({
-      from: accounts[1]
-    });
-       assert.equal(99996600119999908000, B);
-
-  })
-})
 

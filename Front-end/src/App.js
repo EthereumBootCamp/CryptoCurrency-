@@ -69,6 +69,16 @@ console.log(result)
 // console.log(result)
     this.setState({ message: "transaction has been entered" });
   };
+  getEthers= async event => {
+   event.preventDefault();
+   const accounts = await web3.eth.getAccounts();
+   this.setState({ message: 'Waiting on transaction success...' });
+   await token.methods.getEthers(this.state.value).send({
+     from: accounts[0]
+   });
+   this.setState({ message: 'You sold your tokens!' });
+  };
+
   render() {
     return (
       <div>
@@ -165,6 +175,18 @@ console.log(result)
           <button>Set allowance!</button>
         </form>
         <hr />
+        <form getEthers={this.getEthers}>
+         <h4>Sell Tokens</h4>
+         <div>
+           <label>Amount of tokens to sell</label>
+           <input
+             value={this.state.value}
+             onChange={event => this.setState({ value: event.target.value })}
+           />
+         </div>
+         <button>sell Tokens</button>
+       </form>
+       <hr />
       </div>
     );
   }
