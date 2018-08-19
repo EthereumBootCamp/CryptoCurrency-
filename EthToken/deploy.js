@@ -7,6 +7,7 @@ const provider = new HDWalletProvider(
   'https://rinkeby.infura.io/v3/ef087681f7924486b9092ecc6abf84bc'
 );
 const web3 = new Web3(provider);
+let contractAddress;
 
 const deploy = async () => {
   const accounts = await web3.eth.getAccounts();
@@ -16,7 +17,9 @@ const deploy = async () => {
   const result = await new web3.eth.Contract(JSON.parse(interface))
     .deploy({ data: bytecode, arguments: [1000, 'Hidden Figures', 0, 'HF' , 100] })
     .send({ gas: '1000000', from: accounts[0] });
-  console.log('Contract deployed to', result.options.address);
+  contractAddress = result.options.address;
+  console.log('Contract deployed to', contractAddress);
 };
+
 deploy();
-console.log("bushra")
+//module.exports.contractAddress= contractAddress;
