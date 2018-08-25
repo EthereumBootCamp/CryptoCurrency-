@@ -15,5 +15,5 @@ const input = {
   }
 };
 let compiled = solc.compile(input, 1);
-console.log(compiled); 
+console.log(compiled); // it will help you in fixing your solidity code, comment it when youre done. 
 module.exports  = compiled.contracts[ 'HiddenFig.sol:HiddenFig'];
