@@ -1,5 +1,5 @@
 import web3 from './web3';
-//Your contract address which you get after deploying it. 
+//Your contract address which you can get after deploying it. 
 const address = '0xcad3322c5bD8B7E24629C5C1fd8Bb6565808f323';//its you contract address which you get after deploying your contract. 
 //The abi you get out of compiling your code. 
 const abi = [

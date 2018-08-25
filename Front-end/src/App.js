@@ -13,11 +13,11 @@ class App extends Component {
     addressFrom: ''
   };
   componentDidMount() {
-    const owner =  "0x1e7FB32c9767D9dF77c32CcD5778d1598aC7C07E" //you nedd this just to get a proper front end, the address of the deployer which is the the address of the account youre using on metmask
+    const owner =  "0x1e7FB32c9767D9dF77c32CcD5778d1598aC7C07E" //The address of the deployer which is the the address of the account you're using on metmask.Its for a better front end.
     
     this.setState({ owner });
   }
-//In all functions you need to get the accounts because account[0] will point to the current account youre using on metamask, also notice when you should use .call and .send. 
+//In all functions you need to get the accounts so that account[0] will point to the current account you're using on metamask, also notice when you should use .call and .send. 
 //*Note: if you use .call there is no need for the from key . Try it. 
   onSubmit = async event => {
     event.preventDefault();
