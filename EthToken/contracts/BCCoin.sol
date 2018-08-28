@@ -8,7 +8,7 @@ pragma solidity ^0.4.21;
 import "./EIP20Interface.sol";// remove
 
 
-contract HiddenFig is EIP20Interface {
+contract BCCoin is testInterface {
 
     uint256 constant private MAX_UINT256 = 2**256 - 1;
    mapping (address => uint256) public balances;// remove

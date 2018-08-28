@@ -13,11 +13,12 @@ class App extends Component {
     addressFrom: ''
   };
   componentDidMount() {
-    const owner =  "0x1e7FB32c9767D9dF77c32CcD5778d1598aC7C07E" 
+    const owner =  "0x1e7FB32c9767D9dF77c32CcD5778d1598aC7C07E" //The address of the deployer which is the the address of the account you're using on metmask.Its for a better front end.
     
     this.setState({ owner });
   }
-
+//In all functions you need to get the accounts so that account[0] will point to the current account you're using on metamask, also notice when you should use .call and .send. 
+//*Note: if you use .call there is no need for the from key . Try it. 
   onSubmit = async event => {
     event.preventDefault();
     const accounts = await web3.eth.getAccounts();
@@ -46,7 +47,7 @@ console.log(result)
      await token.methods.transfer(this.state.address,this.state.value).send({
       from: accounts[0]
     });
-// console.log(result)
+
     this.setState({ message: "transaction has been entered" });
   };
   transferFrom = async event => {
@@ -56,7 +57,7 @@ console.log(result)
      await token.methods.transferFrom(this.state.addressFrom, this.state.address,this.state.value).send({
       from: accounts[0]
     });
-// console.log(result)
+
     this.setState({ message: "transaction has been entered" });
   };
   approve = async event => {
@@ -66,7 +67,7 @@ console.log(result)
      await token.methods.approve(this.state.address,this.state.value).send({
       from: accounts[0]
     });
-// console.log(result)
+
     this.setState({ message: "transaction has been entered" });
   };
   getEthers= async event => {

@@ -1,4 +1,4 @@
-const HDWalletProvider = require('truffle-hdwallet-provider');
+const HDWalletProvider = require('truffle-hdwallet-provider'); //It can be uses wherever a Web3 provider is needed, not just in Truffle. It will sign transactions for addresses derived from a 12-word mnemonic.
 const Web3 = require('web3');
 const { interface, bytecode } = require('./compile');
 
@@ -15,11 +15,10 @@ const deploy = async () => {
   console.log('Attempting to deploy from account', accounts[0]);
 
   const result = await new web3.eth.Contract(JSON.parse(interface))
-    .deploy({ data: bytecode, arguments: [1000, 'Hidden Figures', 0, 'HF' , 100] })
+    .deploy({ data: bytecode, arguments: [1000, 'BCCoin', 0, 'BC' , 100] })
     .send({ gas: '1000000', from: accounts[0] });
   contractAddress = result.options.address;
   console.log('Contract deployed to', contractAddress);
 };
 
 deploy();
-//module.exports.contractAddress= contractAddress;
