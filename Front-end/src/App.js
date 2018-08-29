@@ -5,7 +5,6 @@ import token from './token';
 class App extends Component {
   state = {
     owner: '',
-    players:[],
     balance: '',
     value: '',
     message: '',
