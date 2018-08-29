@@ -11,8 +11,8 @@ class App extends Component {
     address: '',
     addressFrom: ''
   };
-  componentDidMount() {
-    const owner =  "0x1e7FB32c9767D9dF77c32CcD5778d1598aC7C07E" //The address of the deployer which is the the address of the account you're using on metmask.Its for a better front end.
+  componentDidMount() async {
+    const owner =  await token.methods.Owner().call(); //The address of the deployer which is the the address of the account you're using on metmask.Its for a better front end.
     
     this.setState({ owner });
   }
@@ -84,9 +84,7 @@ console.log(result)
       <div>
         <h2>My Currency</h2>
         <p>
-          This token is owned by {this.state.owner}. There are currently{' '}
-          {this.state.players.length} tokens left, competing to win{' '}
-          {web3.utils.fromWei(this.state.balance, 'ether')} ether!
+          This token is owned by {this.state.owner}.
         </p>
         <hr />
         <form onSubmit={this.onSubmit}>
