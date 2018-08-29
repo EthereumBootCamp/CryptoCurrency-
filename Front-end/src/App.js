@@ -173,7 +173,7 @@ console.log(result)
           <button>Set allowance!</button>
         </form>
         <hr />
-        <form getEthers={this.getEthers}>
+        <form onSubmit={this.getEthers}>
          <h4>Sell Tokens</h4>
          <div>
            <label>Amount of tokens to sell</label>
