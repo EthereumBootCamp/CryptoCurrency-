@@ -18,7 +18,7 @@ class App extends Component {
   }
 //In all functions you need to get the accounts so that account[0] will point to the current account you're using on metamask, also notice when you should use .call and .send. 
 //*Note: if you use .call there is no need for the from key . Try it. 
-  onSubmit = async event => {
+  getTokens = async event => {
     event.preventDefault();
     const accounts = await web3.eth.getAccounts();
     this.setState({ message: 'Waiting on transaction success...' });
@@ -28,7 +28,7 @@ class App extends Component {
     });
     this.setState({ message: 'You got your tokens!' });
   };
-  onClick = async event => { 
+  getBalance = async event => { 
     event.preventDefault();
     const accounts = await web3.eth.getAccounts();
     console.log(typeof accounts[0],  accounts[0]);
@@ -87,7 +87,7 @@ console.log(result)
           This token is owned by {this.state.owner}.
         </p>
         <hr />
-        <form onSubmit={this.onSubmit}>
+        <form onSubmit={this.getTokens}>
           <h4>Buy Tokens</h4>
           <div>
             <label>Amount of ether to enter</label>
@@ -99,7 +99,7 @@ console.log(result)
           <button>getTokens</button>
         </form>
         <hr />
-         <form onSubmit={this.onClick}>
+         <form onSubmit={this.getBalance}>
           <h4>View your balance of Tokens</h4>
           <div>
             <label>Enter the address</label>
